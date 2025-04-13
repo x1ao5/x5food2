@@ -1,0 +1,582 @@
+/* 吉卜力風格變數 */
+:root {
+    --ghibli-blue: #92B4D3;
+    --ghibli-green: #B7CE63;
+    --ghibli-yellow: #F5D76B;
+    --ghibli-red: #E74C3C;
+    --ghibli-brown: #8B5A2B;
+    --ghibli-cream: #FFF8E6;
+    --ghibli-paper: #F5F0E1;
+}
+
+/* 基礎樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans TC', 'Ma Shan Zheng', sans-serif;
+}
+
+body {
+    background-color: var(--ghibli-cream);
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    background-image: url('https://i.ibb.co/BmY9HbH/Chat-GPT-Image-2025-4-5-05-52-24.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    min-height: 100vh;
+}
+
+.background-texture {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://i.ibb.co/pvVxRTNt/Chat-GPT-Image-2025-4-5-06-59-34.png');
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* 標題樣式 */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 3.5rem;
+    color: var(--ghibli-brown);
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-shadow: 3px 3px 0px rgba(139, 90, 43, 0.1);
+    font-family: 'Ma Shan Zheng', cursive;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+h1:after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ghibli-green), var(--ghibli-blue));
+    border-radius: 3px;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    color: var(--ghibli-brown);
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.ghibli-character {
+    position: absolute;
+    top: -30px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background-image: url('https://i.ibb.co/pvVxRTNt/Chat-GPT-Image-2025-4-5-06-59-34.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.1));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+/* 主內容佈局 */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 紙張質感 */
+.paper-texture {
+    background-color: var(--ghibli-paper);
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 
+        0 5px 15px rgba(0,0,0,0.1),
+        inset 0 0 30px rgba(139, 90, 43, 0.1);
+    border: 1px solid rgba(139, 90, 43, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.paper-texture:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://i.ibb.co/pvVxRTNt/Chat-GPT-Image-2025-4-5-06-59-34.png');
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.hand-drawn-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.hand-drawn-underline:after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--ghibli-red);
+    border-radius: 3px;
+    transform: skewX(-15deg);
+}
+
+/* 表單樣式 */
+.form-section h2, 
+.records-section h2 {
+    color: var(--ghibli-brown);
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--ghibli-brown);
+    font-size: 1.1rem;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="url"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(139, 90, 43, 0.3);
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--ghibli-blue);
+    outline: none;
+    box-shadow: 
+        inset 0 2px 5px rgba(0,0,0,0.1),
+        0 0 0 3px rgba(146, 180, 211, 0.3);
+    background-color: white;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* 評分系統 - 修正版 */
+.rating-stars {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.rating-stars .star {
+    font-size: 1.8rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+}
+
+.rating-stars .star:hover,
+.rating-stars .star.active {
+    color: var(--ghibli-yellow);
+    transform: scale(1.2);
+}
+
+/* 按鈕樣式 */
+.btn {
+    background-color: var(--ghibli-green);
+    color: #333;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+    box-shadow: 
+        0 4px 0 var(--ghibli-brown),
+        0 5px 10px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    background-color: #a8c34a;
+    transform: translateY(2px);
+    box-shadow: 
+        0 2px 0 var(--ghibli-brown),
+        0 3px 10px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.btn-secondary {
+    background-color: var(--ghibli-blue);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7fa3c7;
+}
+
+.btn-cancel {
+    background-color: #95a5a6;
+    color: white;
+    display: none;
+}
+
+.btn-cancel:hover {
+    background-color: #7f8c8d;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* 搜尋框 - 修正版 */
+.search-box {
+    position: relative;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid rgba(139, 90, 43, 0.3);
+    border-radius: 25px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 48px;
+}
+
+.search-btn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--ghibli-brown);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 圖片URL輸入框 - 修正版 */
+.url-icon-container {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ghibli-blue);
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+/* 記錄卡片 */
+.record-card {
+    background-color: white;
+    border-radius: 5px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 
+        0 3px 10px rgba(0,0,0,0.1),
+        inset 0 0 0 5px var(--ghibli-paper);
+    border-left: 8px solid var(--ghibli-green);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.record-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 8px 20px rgba(0,0,0,0.15),
+        inset 0 0 0 5px var(--ghibli-paper);
+}
+
+.record-card:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--ghibli-green), var(--ghibli-blue));
+}
+
+.record-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.record-title {
+    font-size: 1.5rem;
+    color: var(--ghibli-brown);
+    font-weight: 700;
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
+.record-date {
+    color: var(--ghibli-brown);
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.record-rating {
+    margin: 10px 0;
+    display: flex;
+    gap: 20px;
+}
+
+.record-rating div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.record-ingredients {
+    margin: 15px 0;
+    font-size: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.record-ingredients span {
+    display: inline-block;
+    background-color: rgba(183, 206, 99, 0.2);
+    color: var(--ghibli-brown);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    border: 1px dashed rgba(139, 90, 43, 0.3);
+}
+
+.record-notes {
+    font-style: italic;
+    color: var(--ghibli-brown);
+    margin-top: 15px;
+    padding: 15px;
+    background-color: rgba(245, 240, 225, 0.5);
+    border-radius: 5px;
+    border-left: 3px solid var(--ghibli-blue);
+}
+
+.food-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin: 15px 0;
+    border: 1px solid rgba(139, 90, 43, 0.2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* 操作按鈕 */
+.record-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.btn-edit {
+    background-color: var(--ghibli-blue);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.btn-delete {
+    background-color: var(--ghibli-red);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.btn-edit:hover {
+    background-color: #7fa3c7;
+    transform: translateY(-2px);
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* 無記錄提示 */
+.no-records {
+    text-align: center;
+    color: var(--ghibli-brown);
+    padding: 40px 0;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+.no-records p {
+    margin-top: 20px;
+}
+
+.totoro-img {
+    width: 150px;
+    height: auto;
+    opacity: 0.8;
+    animation: bounce 4s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* 訊息提示 */
+.message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.5s;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.message.show {
+    opacity: 1;
+    top: 30px;
+}
+
+.message.success {
+    background-color: var(--ghibli-green);
+}
+
+.message.warning {
+    background-color: var(--ghibli-red);
+}
+
+.message.info {
+    background-color: var(--ghibli-blue);
+}
+
+/* 響應式設計 */
+@media (max-width: 500px) {
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .record-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .record-date {
+        margin-top: 5px;
+    }
+}
+
+/* 加載指示器 */
+.loading-indicator {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+}

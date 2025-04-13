@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>料理手札</title>
+    <link rel="icon" href="https://i.ibb.co/pvVxRTNt/Chat-GPT-Image-2025-4-5-06-59-34.png"/>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 吉卜力風格加載指示器 -->
+    <div class="loading-indicator" id="loading">
+        <div class="loader">
+            <div class="bubble bubble-1"></div>
+            <div class="bubble bubble-2"></div>
+            <div class="bubble bubble-3"></div>
+        </div>
+        <p>料理精靈正在準備食材...</p>
+    </div>
+
+    <div class="background-texture"></div>
+    <div class="container">
+        <header class="app-header">
+            <div class="ghibli-character">
+                <img src="https://i.ibb.co/pvVxRTNt/Chat-GPT-Image-2025-4-5-06-59-34.png" alt="料理精靈" class="character-img">
+            </div>
+            <div class="header-text">
+                <h1 class="app-title">料理手札</h1>
+                <p class="app-subtitle">記錄你的魔法料理時光 ✨</p>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <!-- 表單區塊 -->
+            <section class="form-section">
+                <div class="paper-texture form-paper">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="hand-drawn-underline">新增料理記錄</span>
+                        </h2>
+                        <div class="form-status" id="form-status"></div>
+                    </div>
+                    
+                    <form id="recipe-form" class="recipe-form">
+                        <input type="hidden" id="recipe-id">
+                        
+                        <div class="form-grid">
+                            <!-- 基本資訊 -->
+                            <div class="form-group">
+                                <label for="dish-name" class="form-label">
+                                    <i class="fas fa-utensils"></i> 料理名稱
+                                </label>
+                                <input type="text" id="dish-name" class="form-input" required 
+                                       placeholder="例如: 霍爾的培根早餐">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cooking-date" class="form-label">
+                                    <i class="far fa-calendar-alt"></i> 烹飪日期
+                                </label>
+                                <input type="date" id="cooking-date" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dish-image" class="form-label">
+                                    <i class="far fa-image"></i> 料理照片 (URL)
+                                </label>
+                                <input type="url" id="dish-image" class="form-input" 
+                                       placeholder="https://example.com/image.jpg">
+                                <div class="url-icon-container">
+                                    <i class="fas fa-link"></i>
+                                </div>
+                                <small class="form-hint">支持 JPG, PNG, GIF 格式</small>
+                            </div>
+                            
+                            <!-- 評分區塊 -->
+                            <div class="form-group rating-group">
+                                <label class="form-label">
+                                    <i class="fas fa-star"></i> 美味度評分
+                                </label>
+                                <div class="rating-stars" id="taste-rating">
+                                    <span class="star" data-value="1">⭐</span>
+                                    <span class="star" data-value="2">⭐</span>
+                                    <span class="star" data-value="3">⭐</span>
+                                    <span class="star" data-value="4">⭐</span>
+                                    <span class="star" data-value="5">⭐</span>
+                                </div>
+                                <input type="hidden" id="taste-rating-value" value="0">
+                            </div>
+                            
+                            <div class="form-group rating-group">
+                                <label class="form-label">
+                                    <i class="fas fa-bolt"></i> 難易度評分
+                                </label>
+                                <div class="rating-stars" id="difficulty-rating">
+                                    <span class="star" data-value="1">✨</span>
+                                    <span class="star" data-value="2">✨</span>
+                                    <span class="star" data-value="3">✨</span>
+                                    <span class="star" data-value="4">✨</span>
+                                    <span class="star" data-value="5">✨</span>
+                                </div>
+                                <input type="hidden" id="difficulty-rating-value" value="0">
+                            </div>
+                            
+                            <!-- 食材與步驟 -->
+                            <div class="form-group full-width">
+                                <label for="ingredients" class="form-label">
+                                    <i class="fas fa-carrot"></i> 食材清單
+                                </label>
+                                <textarea id="ingredients" class="form-textarea" rows="3"
+                                          placeholder="例如: 魔法森林的蘑菇, 龍貓的橡果子, 天空之城的蔬菜"></textarea>
+                                <small class="form-hint">請用逗號分隔不同食材</small>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="steps" class="form-label">
+                                    <i class="fas fa-list-ol"></i> 烹飪步驟
+                                </label>
+                                <textarea id="steps" class="form-textarea" rows="5" required
+                                          placeholder="詳細描述你的魔法烹飪過程..."></textarea>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="notes" class="form-label">
+                                    <i class="far fa-lightbulb"></i> 心得備註
+                                </label>
+                                <textarea id="notes" class="form-textarea" rows="3"
+                                          placeholder="這次料理有什麼神奇的發現?"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- 表單操作按鈕 -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary form-submit-btn">
+                                <i class="fas fa-save"></i> 保存記錄
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="fas fa-sync-alt"></i> 重新開始
+                            </button>
+                            <button type="button" id="cancel-edit" class="btn btn-cancel">
+                                <i class="fas fa-times"></i> 取消編輯
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            
+            <!-- 記錄列表區塊 -->
+            <section class="records-section">
+                <div class="paper-texture records-paper">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="hand-drawn-underline">我的料理物語</span>
+                        </h2>
+                        <div class="records-count" id="records-count">0 個記錄</div>
+                    </div>
+                    
+                    <!-- 搜尋框 -->
+                    <div class="search-box">
+                        <input type="text" id="search-input" class="search-input" 
+                               placeholder="搜尋料理名稱或食材...">
+                        <button type="button" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 記錄容器 -->
+                    <div id="records-container">
+                        <div class="no-records">
+                            <img src="https://i.ibb.co/qL40sXF3/Chat-GPT-Image-2025-4-5-06-00-55.png" 
+                                 alt="龍貓" class="no-records-img">
+                            <div class="no-records-text">
+                                <h3>還沒有任何記錄喔～</h3>
+                                <p>快來記錄你的第一道魔法料理吧！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 訊息提示框 -->
+    <div id="message-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
