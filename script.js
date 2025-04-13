@@ -1,6 +1,6 @@
 // 配置設定
 const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/AKfycbwzlxpL-CE8VE2AQhUckDSpYR226R2rXNA2-IKYb7w7PURSU9Fa_otYGxDH8-9u3sg/exec',
+  API_URL: 'https://script.google.com/macros/s/AKfycby8hklVemfDX4HQ_3lZiaded35xt9bvj9K0wrZWc60QXPytIv_PeJJNBaA1iZxKKmkX/exec',
   DEFAULT_IMAGE: 'https://i.ibb.co/qL40sXF3/Chat-GPT-Image-2025-4-5-06-00-55.png',
   MAX_RATING: 5
 };
@@ -140,46 +140,56 @@ function validateForm(formData) {
   return errors;
 }
 
-/* API請求處理 */
+// 改進的API請求處理
 async function fetchAPI(endpoint, method = 'GET', body = null) {
   const options = {
     method,
     headers: { 'Content-Type': 'application/json' },
-    mode: 'cors' // 明確聲明CORS模式
+    // 不再需要手動設置mode: 'cors'
   };
   
   if (body) options.body = JSON.stringify(body);
 
   try {
-    const response = await fetch(endpoint, options);
+    // 添加時間戳防止緩存
+    const url = endpoint.includes('?') 
+      ? `${endpoint}&t=${Date.now()}`
+      : `${endpoint}?t=${Date.now()}`;
     
-    // 檢查響應狀態
+    const response = await fetch(url, options);
+    
+    // 處理GAS的重定向
+    if (response.redirected) {
+      const finalResponse = await fetch(response.url, options);
+      return await finalResponse.json();
+    }
+    
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(errorText || `HTTP錯誤! 狀態碼: ${response.status}`);
     }
 
-    // 嘗試解析JSON
-    try {
-      return await response.json();
-    } catch (e) {
-      if (response.ok) {
-        return { status: 'success' };
-      }
-      throw new Error('無效的JSON響應');
-    }
+    return await response.json();
   } catch (error) {
-    console.error('API請求失敗:', { endpoint, method, error: error.message });
+    console.error('API請求失敗:', {
+      endpoint,
+      error: error.message
+    });
     
+    // 更詳細的錯誤訊息
+    let userMessage = '網絡連接失敗';
     if (error.message.includes('Failed to fetch')) {
-      throw new Error('網絡連接失敗，請檢查您的網絡設置');
+      userMessage = `無法連接API伺服器，請檢查:
+        1. API URL是否正確
+        2. 網路連接是否正常
+        3. 後端是否已部署`;
     }
     
-    throw error;
+    throw new Error(userMessage);
   }
 }
 
-/* 測試API連接 */
+// 改進的測試連接函數
 async function testConnection() {
   try {
     const response = await fetchAPI(`${CONFIG.API_URL}?test=1`);
@@ -187,9 +197,26 @@ async function testConnection() {
     if (response.status !== 'success') {
       throw new Error('API返回異常狀態');
     }
+    
+    // 添加日誌幫助調試
+    console.log('API連接測試成功:', response);
+    return true;
   } catch (error) {
     console.error('API連接測試失敗:', error);
-    throw new Error(`無法連接到API服務器: ${error.message}`);
+    
+    // 在頁面顯示詳細錯誤
+    const testUrl = `${CONFIG.API_URL}?test=1`;
+    showMessage(`
+      <strong>API連接失敗</strong><br>
+      錯誤: ${error.message}<br>
+      測試URL: <a href="${testUrl}" target="_blank">${testUrl}</a><br>
+      請確認:
+      1. 已正確部署GAS腳本
+      2. 部署權限設為"任何人"
+      3. 使用/exec的URL
+    `, 'error', 10000);
+    
+    throw error;
   }
 }
 
